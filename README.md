@@ -1,6 +1,8 @@
 # Crawler Testing Server
 This project provides a local server to simulate various real-world edge cases for testing web crawlers or scrapers. It allows you to evaluate how your crawler handles slow pages, redirects, large content, error pages (404/503), duplicate links, and rate-limiting scenarios.
 
+This is created to serve as test bed for testing the web scraping capabilities of [crawl4ai](https://github.com/unclecode/crawl4ai).
+
 ## Features
 - Slow-Loading Pages: Simulate pages that introduce delays between 2 to 5 seconds.
 - Infinite Redirect Loops: Pages that redirect to themselves, creating a loop.
