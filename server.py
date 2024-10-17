@@ -2,6 +2,7 @@ from flask import Flask, render_template_string, redirect, request, Response, se
 import random
 import time
 import os
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -105,6 +106,45 @@ def robots_txt():
     Serve the robots.txt file.
     """
     return send_from_directory(STATIC_FOLDER, 'robots.txt')
+
+# Filter Pages
+@app.route('/filter/last_modified/<int:days>')
+def last_modified_page(days):
+    """
+    Page with Last-Modified header to test DateFilter.
+    """
+    last_modified_date = datetime.now() - timedelta(days=days)
+    response = Response('<html><body><h1>Last Modified Page</h1></body></html>')
+    response.headers['Last-Modified'] = last_modified_date.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    return response
+
+@app.route('/filter/content_length/<int:size>')
+def content_length_page(size):
+    """
+    Page with Content-Length header to test SizeFilter.
+    """
+    content = 'x' * size  # Generate content of specified size
+    response = Response(content)
+    response.headers['Content-Length'] = str(len(content))
+    return response
+
+@app.route('/filter/url_pattern/<pattern>')
+def url_pattern_page(pattern):
+    """
+    Page with a specific URL pattern to test URLPatternFilter.
+    """
+    response = Response('<html><body><h1>URL Pattern Page</h1></body></html>')
+    response.headers['Custom-URL-Pattern'] = pattern
+    return response
+
+@app.route('/filter/content_type/<content_type>')
+def content_type_page(content_type):
+    """
+    Page with Content-Type header to test ContentTypeFilter.
+    """
+    response = Response('<html><body><h1>Content Type Page</h1></body></html>')
+    response.headers['Content-Type'] = content_type
+    return response
 
 if __name__ == '__main__':
     # Ensure the static directory exists
