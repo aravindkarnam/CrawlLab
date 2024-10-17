@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /private/
+Allow: /public/
+Disallow: /admin/
+Disallow: /hidden/
+Disallow: /no-crawl/
